@@ -60,3 +60,14 @@ top_countries = pd.DataFrame(country_counts.most_common(15), columns=['Pays', 'N
 
 st.bar_chart(top_countries.set_index('Pays'))
 
+st.header("Ajouts par année")
+
+import plotly.express as px
+
+additions_by_year = df_filtered['year_added'].value_counts().sort_index()
+
+fig = px.line(x=additions_by_year.index, y=additions_by_year.values,
+              title='Évolution des ajouts',
+              labels={'x': 'Année', 'y': 'Nombre'})
+st.plotly_chart(fig)
+
