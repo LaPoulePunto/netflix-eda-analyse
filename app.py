@@ -48,3 +48,15 @@ top_genres = pd.DataFrame(genre_counts.most_common(10), columns=['Genre', 'Nombr
 
 st.bar_chart(top_genres.set_index('Genre'))
 
+st.header("Pays")
+
+all_countries = []
+for countries in df_filtered['country']:
+    country_list = [c.strip() for c in str(countries).split(',')]
+    all_countries.extend(country_list)
+
+country_counts = Counter(all_countries)
+top_countries = pd.DataFrame(country_counts.most_common(15), columns=['Pays', 'Nombre'])
+
+st.bar_chart(top_countries.set_index('Pays'))
+
