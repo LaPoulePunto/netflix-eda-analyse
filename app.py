@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 st.title("Analyse du catalogue Netflix")
 
@@ -20,7 +21,10 @@ col3.metric("Séries", len(df[df['type'] == 'TV Show']))
 st.header("Films vs Séries")
 
 type_counts = df['type'].value_counts()
-st.bar_chart(type_counts)
+fig_type = px.bar(x=type_counts.index, y=type_counts.values,
+                  title='Films vs Séries',
+                  labels={'x': 'Type', 'y': 'Nombre'})
+st.plotly_chart(fig_type)
 
 st.header("Filtres")
 
@@ -46,7 +50,10 @@ for genres in df_filtered['listed_in'].dropna():
 genre_counts = Counter(all_genres)
 top_genres = pd.DataFrame(genre_counts.most_common(10), columns=['Genre', 'Nombre'])
 
-st.bar_chart(top_genres.set_index('Genre'))
+fig_genres = px.bar(top_genres, x='Genre', y='Nombre',
+                    title='Top 10 des genres',
+                    labels={'Genre': 'Genre', 'Nombre': 'Nombre'})
+st.plotly_chart(fig_genres)
 
 st.header("Pays")
 
@@ -58,11 +65,12 @@ for countries in df_filtered['country']:
 country_counts = Counter(all_countries)
 top_countries = pd.DataFrame(country_counts.most_common(15), columns=['Pays', 'Nombre'])
 
-st.bar_chart(top_countries.set_index('Pays'))
+fig_countries = px.bar(top_countries, x='Pays', y='Nombre',
+                       title='Top 15 des pays',
+                       labels={'Pays': 'Pays', 'Nombre': 'Nombre'})
+st.plotly_chart(fig_countries)
 
 st.header("Ajouts par année")
-
-import plotly.express as px
 
 additions_by_year = df_filtered['year_added'].value_counts().sort_index()
 
