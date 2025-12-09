@@ -71,3 +71,10 @@ fig = px.line(x=additions_by_year.index, y=additions_by_year.values,
               labels={'x': 'Année', 'y': 'Nombre'})
 st.plotly_chart(fig)
 
+st.header("Classifications")
+
+rating_counts = df_filtered['rating'].value_counts()
+fig_pie = px.pie(values=rating_counts.values, names=rating_counts.index,
+                 title='Répartition des classifications')
+st.plotly_chart(fig_pie)
+
