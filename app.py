@@ -22,3 +22,15 @@ st.header("Films vs Séries")
 type_counts = df['type'].value_counts()
 st.bar_chart(type_counts)
 
+st.header("Filtres")
+
+type_filter = st.multiselect("Type", df['type'].unique(), default=df['type'].unique())
+year_range = st.slider("Année de sortie", 
+                       int(df['release_year'].min()), 
+                       int(df['release_year'].max()),
+                       (int(df['release_year'].min()), int(df['release_year'].max())))
+
+df_filtered = df[(df['type'].isin(type_filter)) & 
+                 (df['release_year'] >= year_range[0]) & 
+                 (df['release_year'] <= year_range[1])]
+
