@@ -34,3 +34,17 @@ df_filtered = df[(df['type'].isin(type_filter)) &
                  (df['release_year'] >= year_range[0]) & 
                  (df['release_year'] <= year_range[1])]
 
+st.header("Genres")
+
+from collections import Counter
+
+all_genres = []
+for genres in df_filtered['listed_in'].dropna():
+    genre_list = [g.strip() for g in str(genres).split(',')]
+    all_genres.extend(genre_list)
+
+genre_counts = Counter(all_genres)
+top_genres = pd.DataFrame(genre_counts.most_common(10), columns=['Genre', 'Nombre'])
+
+st.bar_chart(top_genres.set_index('Genre'))
+
