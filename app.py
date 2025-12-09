@@ -17,3 +17,8 @@ col1.metric("Total", len(df))
 col2.metric("Films", len(df[df['type'] == 'Movie']))
 col3.metric("Séries", len(df[df['type'] == 'TV Show']))
 
+st.header("Films vs Séries")
+
+type_counts = df['type'].value_counts()
+st.bar_chart(type_counts)
+
