@@ -18,8 +18,15 @@ uv pip install -r pyproject.toml
 
 Ouvrir le fichier `main.ipynb` dans Jupyter ou directement dans VS Code.
 
+### Application Streamlit
+
+```bash
+streamlit run app.py
+```
+
 ## Fichiers
 
 - `main.ipynb` : Notebook principal avec toutes les analyses
+- `app.py` : Application Streamlit interactive
 - `netflix_titles.csv` : Dataset Netflix
 - `pyproject.toml` : Dépendances du projet
