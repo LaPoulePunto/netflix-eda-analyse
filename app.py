@@ -38,51 +38,54 @@ df_filtered = df[(df['type'].isin(type_filter)) &
                  (df['release_year'] >= year_range[0]) & 
                  (df['release_year'] <= year_range[1])]
 
-st.header("Genres")
+if len(df_filtered) == 0:
+    st.warning("Aucun résultat trouvé avec les filtres sélectionnés. Veuillez ajuster vos critères.")
+else:
+    st.header("Genres")
 
-from collections import Counter
+    from collections import Counter
 
-all_genres = []
-for genres in df_filtered['listed_in'].dropna():
-    genre_list = [g.strip() for g in str(genres).split(',')]
-    all_genres.extend(genre_list)
+    all_genres = []
+    for genres in df_filtered['listed_in'].dropna():
+        genre_list = [g.strip() for g in str(genres).split(',')]
+        all_genres.extend(genre_list)
 
-genre_counts = Counter(all_genres)
-top_genres = pd.DataFrame(genre_counts.most_common(10), columns=['Genre', 'Nombre'])
+    genre_counts = Counter(all_genres)
+    top_genres = pd.DataFrame(genre_counts.most_common(10), columns=['Genre', 'Nombre'])
 
-fig_genres = px.bar(top_genres, x='Genre', y='Nombre',
-                    title='Top 10 des genres',
-                    labels={'Genre': 'Genre', 'Nombre': 'Nombre'})
-st.plotly_chart(fig_genres)
+    fig_genres = px.bar(top_genres, x='Genre', y='Nombre',
+                        title='Top 10 des genres',
+                        labels={'Genre': 'Genre', 'Nombre': 'Nombre'})
+    st.plotly_chart(fig_genres)
 
-st.header("Pays")
+    st.header("Pays")
 
-all_countries = []
-for countries in df_filtered['country']:
-    country_list = [c.strip() for c in str(countries).split(',')]
-    all_countries.extend(country_list)
+    all_countries = []
+    for countries in df_filtered['country']:
+        country_list = [c.strip() for c in str(countries).split(',')]
+        all_countries.extend(country_list)
 
-country_counts = Counter(all_countries)
-top_countries = pd.DataFrame(country_counts.most_common(15), columns=['Pays', 'Nombre'])
+    country_counts = Counter(all_countries)
+    top_countries = pd.DataFrame(country_counts.most_common(15), columns=['Pays', 'Nombre'])
 
-fig_countries = px.bar(top_countries, x='Pays', y='Nombre',
-                       title='Top 15 des pays',
-                       labels={'Pays': 'Pays', 'Nombre': 'Nombre'})
-st.plotly_chart(fig_countries)
+    fig_countries = px.bar(top_countries, x='Pays', y='Nombre',
+                           title='Top 15 des pays',
+                           labels={'Pays': 'Pays', 'Nombre': 'Nombre'})
+    st.plotly_chart(fig_countries)
 
-st.header("Ajouts par année")
+    st.header("Ajouts par année")
 
-additions_by_year = df_filtered['year_added'].value_counts().sort_index()
+    additions_by_year = df_filtered['year_added'].value_counts().sort_index()
 
-fig = px.line(x=additions_by_year.index, y=additions_by_year.values,
-              title='Évolution des ajouts',
-              labels={'x': 'Année', 'y': 'Nombre'})
-st.plotly_chart(fig)
+    fig = px.line(x=additions_by_year.index, y=additions_by_year.values,
+                  title='Évolution des ajouts',
+                  labels={'x': 'Année', 'y': 'Nombre'})
+    st.plotly_chart(fig)
 
-st.header("Classifications")
+    st.header("Classifications")
 
-rating_counts = df_filtered['rating'].value_counts()
-fig_pie = px.pie(values=rating_counts.values, names=rating_counts.index,
-                 title='Répartition des classifications')
-st.plotly_chart(fig_pie)
+    rating_counts = df_filtered['rating'].value_counts()
+    fig_pie = px.pie(values=rating_counts.values, names=rating_counts.index,
+                     title='Répartition des classifications')
+    st.plotly_chart(fig_pie)
 
