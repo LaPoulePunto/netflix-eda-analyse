@@ -20,6 +20,10 @@ Ouvrir le fichier `main.ipynb` dans Jupyter ou directement dans VS Code.
 
 ### Application Streamlit
 
+Application déployée : https://lapoulepunto-netflix-eda-analyse-app-obtr78.streamlit.app/
+
+Pour lancer localement :
+
 ```bash
 streamlit run app.py
 ```
