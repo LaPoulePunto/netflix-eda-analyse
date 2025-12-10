@@ -27,3 +27,6 @@ Thumbs.db
 *.tmp
 *.log
 
+# UV - fichier de config (gardé localement, non versionné pour Streamlit Cloud)
+pyproject.toml
+
