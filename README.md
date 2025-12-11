@@ -33,4 +33,5 @@ streamlit run app.py
 - `main.ipynb` : Notebook principal avec toutes les analyses
 - `app.py` : Application Streamlit interactive
 - `netflix_titles.csv` : Dataset Netflix
+- `EDA.pdf` : Rapport d'analyse exploratoire des données
 - `pyproject.toml` : Dépendances du projet
